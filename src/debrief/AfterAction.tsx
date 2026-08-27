@@ -80,11 +80,20 @@ export function AfterAction() {
           </div>
           <div>
             <dt className="text-xs uppercase tracking-[0.14em] text-[var(--pp-route)]">
-              Resources gained this campaign
+              Campaign resource totals
             </dt>
             <dd className="text-sm">
               Materials {game.resources.materials} · Intel {game.resources.intel} ·
-              Pivot Tokens {game.resources.pivotTokens}
+              Pivot Tokens {game.resources.pivotTokens} (not spendable yet)
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs uppercase tracking-[0.14em] text-[var(--pp-route)]">
+              Replay rewards
+            </dt>
+            <dd className="text-sm text-[var(--pp-route)]">
+              Completing this mission again currently grants its completion resources
+              again. Influence and Experience have no usable loop yet.
             </dd>
           </div>
         </dl>

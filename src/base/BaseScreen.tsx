@@ -20,6 +20,7 @@ export function BaseScreen() {
     placeBuilding,
     setWorldId,
     playStyle,
+    replayTutorial,
   } = useGame()
   const [selected, setSelected] = useState<string | null>('command')
   const [placeModeId, setPlaceModeId] = useState<string | null>(null)
@@ -77,7 +78,7 @@ export function BaseScreen() {
             Intel {game.resources.intel}
           </span>
           <span className="border border-[var(--pp-brass)]/35 px-2 py-1">
-            Pivot {game.resources.pivotTokens}
+            Pivot {game.resources.pivotTokens} · not spendable yet
           </span>
           <label className="flex items-center gap-2">
             <span className="uppercase tracking-[0.12em] text-[var(--pp-copper)]">
@@ -100,6 +101,7 @@ export function BaseScreen() {
       </header>
 
       <nav className="pp-tool-rail pp-fade-up" aria-label="War room tools">
+        <Link to="/how-to-play">How to Play</Link>
         <Link to="/settings">Play Style</Link>
         <Link to="/saves">Save slots</Link>
         {(levels.workshop ?? 0) >= 1 ? <Link to="/workshop">Workshop</Link> : null}
@@ -165,7 +167,12 @@ export function BaseScreen() {
               <h3 className="pp-display text-xl text-[var(--pp-ink)]">
                 {selectedDef.name}
               </h3>
-              <p className="text-sm text-[var(--pp-route)]">{selectedDef.description}</p>
+                  <p className="text-sm text-[var(--pp-route)]">{selectedDef.description}</p>
+                  <p className="mt-1 text-xs text-[var(--pp-accent)]">
+                    {selected === 'workshop'
+                      ? 'Mechanical effect: unlocks the Workshop to craft equipment.'
+                      : 'No mechanical benefit yet. Placement and level are recorded only.'}
+                  </p>
               <p className="mt-1 pp-mono text-xs uppercase tracking-wide text-[var(--pp-accent)]">
                 Level {selectedLevel}
                 {upgradeDef && selectedLevel < upgradeDef.maxLevel
@@ -233,6 +240,16 @@ export function BaseScreen() {
               Available missions
             </h2>
           </div>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              replayTutorial()
+              playUi(playStyle)
+              navigate('/mission/supply-line')
+            }}
+          >
+            Replay tutorial
+          </Button>
         </div>
         <ul className="space-y-3">
           {packMissions.map((mission) => (

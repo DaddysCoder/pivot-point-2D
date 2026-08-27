@@ -19,6 +19,7 @@ interface PivotEventProps {
   predictability: 'high' | 'balanced' | 'unpredictable'
   resources?: ResourceState
   worldId?: string
+  onHowToPlay?: () => void
 }
 
 const CONDITION_COPY: Record<MissionLogTone, string> = {
@@ -55,6 +56,7 @@ export function PivotEventOverlay({
   predictability,
   resources,
   worldId,
+  onHowToPlay,
 }: PivotEventProps) {
   const tags = conditionTags(event)
   const backdrop = worldId === 'frontier' ? frontierPivotArtFor(event.statusLabel) : undefined
@@ -79,6 +81,9 @@ export function PivotEventOverlay({
         <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-[var(--pp-alert)]">
           Pivot Point · Conditions changed
         </p>
+        <p className="mb-3 font-serif text-lg leading-snug text-[var(--pp-ink)]">
+          Your original plan changed. Choose a new approach; this is not a failure.
+        </p>
         <ul className="mb-3 flex flex-wrap gap-1.5" aria-label="Changed conditions">
           {tags.map((tag) => (
             <li
@@ -97,15 +102,25 @@ export function PivotEventOverlay({
         <p className="mb-4 text-base leading-relaxed text-[var(--pp-ink)]">
           {event.description}
         </p>
-        <p className="pp-display mb-4 text-2xl text-[var(--pp-ink)]">
+        <p className="pp-display mb-2 text-2xl text-[var(--pp-ink)]">
           What is your next move?
         </p>
+        {onHowToPlay ? (
+          <button
+            type="button"
+            className="mb-3 text-[10px] uppercase tracking-[0.16em] text-[var(--pp-copper)] underline-offset-2 hover:underline"
+            onClick={onHowToPlay}
+          >
+            How to Play
+          </button>
+        ) : null}
         <DecisionPanel
           choices={choices}
           onSelect={onSelect}
           decisionLoad={decisionLoad}
           informationStyle={informationStyle}
           resources={resources}
+          showNowHelp
         />
       </div>
     </Modal>

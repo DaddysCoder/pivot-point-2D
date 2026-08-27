@@ -242,6 +242,8 @@ export function applyEffects(
         break
       }
       case 'move_to': {
+        // Authored choices are the movement model. The map graph is a visual
+        // record; move_to does not walk edges or check blocked routes.
         next = movePlayer(next, mission, effect.nodeId)
         events.push({ type: 'MOVED', payload: { nodeId: effect.nodeId } })
         break
@@ -272,7 +274,7 @@ export function applyEffects(
             next,
             'info',
             'CONDITIONS CHANGED',
-            `Insufficient ${effect.resource}. Find another approach.`,
+            `Unavailable — missing ${effect.resource} (have ${next.resources[effect.resource]}, need ${effect.amount}). Choose another approach.`,
           )
           events.push({
             type: 'RESOURCE_REQUIREMENT_UNMET',
@@ -305,6 +307,22 @@ export function applyEffects(
         break
       }
       case 'complete_mission': {
+        if (next.playerNodeId !== mission.map.objectiveNodeId) {
+          next = appendLog(
+            next,
+            'info',
+            'OBJECTIVE NOT YET MET',
+            'Reach the mission destination before completing the objective. This is not a failure.',
+          )
+          events.push({
+            type: 'COMPLETION_REJECTED',
+            payload: {
+              playerNodeId: next.playerNodeId,
+              objectiveNodeId: mission.map.objectiveNodeId,
+            },
+          })
+          break
+        }
         next = { ...next, missionStatus: 'completed' }
         events.push({ type: 'MISSION_COMPLETED' })
         break

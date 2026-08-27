@@ -5,6 +5,7 @@ import { EquipmentMark } from '@/crafting/EquipmentMark'
 import { LoadoutPanel } from '@/crafting/LoadoutPanel'
 import { Button } from '@/components/Button'
 import { buildIntelArtefacts } from '@/mission/intelArtefacts'
+import { MissionInstructionBlock } from '@/mission/MissionInstructionBlock'
 import { IntelArtefact } from '@/mission/IntelArtefact'
 import { playIntel } from '@/app/sound'
 import type { SoundGates } from '@/app/sound'
@@ -13,6 +14,7 @@ interface MissionBriefProps {
   mission: MissionDefinition
   onBegin: () => void
   onBack: () => void
+  onHowToPlay?: () => void
   soundGates?: SoundGates
   inventory?: EquipmentInventoryEntry[]
   activeLoadout?: EquipmentId[]
@@ -24,6 +26,7 @@ export function MissionBrief({
   mission,
   onBegin,
   onBack,
+  onHowToPlay,
   soundGates,
   inventory = [],
   activeLoadout = [],
@@ -51,6 +54,18 @@ export function MissionBrief({
       <p className="mt-3 border-l-2 border-[var(--pp-copper)] pl-3 font-serif text-xl leading-snug text-[var(--pp-ink)]">
         {mission.objective}
       </p>
+
+      {onHowToPlay ? (
+        <button
+          type="button"
+          className="mt-3 text-[10px] uppercase tracking-[0.16em] text-[var(--pp-copper)] underline-offset-2 hover:underline"
+          onClick={onHowToPlay}
+        >
+          How to Play
+        </button>
+      ) : null}
+
+      <MissionInstructionBlock mission={mission} />
 
       <section className="mt-6" aria-labelledby="field-intel-title">
         <h2

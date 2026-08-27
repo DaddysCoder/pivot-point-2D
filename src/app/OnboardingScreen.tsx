@@ -18,7 +18,11 @@ const STEPS = [
   },
   {
     title: 'Play your way',
-    body: 'Use Play Style to tune predictability, decision load, motion, and sound. Timers are off by default.',
+    body: 'Use Play Style to tune predictability, decision load, motion, and sound. Time pressure and timed transitions are not active yet.',
+  },
+  {
+    title: 'How to play',
+    body: 'Your goal is to complete the mission objective. Choose one action at a time. The map is a visual record. If a Pivot Event interrupts the plan, adapt — that is not a failure. Current missions have no traditional lose condition.',
   },
 ] as const
 
@@ -67,6 +71,13 @@ export function OnboardingScreen() {
           }}
         >
           Skip
+        </Button>
+        <Button
+          variant="ghost"
+          className="text-[var(--pp-parchment)] hover:bg-white/5"
+          onClick={() => navigate('/how-to-play?from=/onboarding')}
+        >
+          How to Play
         </Button>
       </div>
     </div>

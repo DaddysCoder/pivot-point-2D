@@ -11,6 +11,9 @@ export interface GameContextValue {
   activeSaveId: string
   customMissions: CustomMissionRecord[]
   onboardingComplete: boolean
+  tutorialComplete: boolean
+  tutorialReplayActive: boolean
+  tutorialRunId: number
   dispatch: (action: PlayerAction) => void
   setCharacter: (character: PlayerCharacter) => void
   setPlayStyle: (settings: PlayStyleSettings) => void
@@ -31,6 +34,8 @@ export interface GameContextValue {
   saveToSlot: (id: string, label: string) => Promise<void>
   deleteSaveSlot: (id: string) => Promise<void>
   completeOnboarding: () => void
+  completeTutorial: () => void
+  replayTutorial: () => void
 }
 
 export const GameContext = createContext<GameContextValue | null>(null)

@@ -34,6 +34,7 @@ import {
 import { buildMissionRegistry } from '@/worlds/registry'
 
 const ONBOARDING_KEY = 'pivot-point.onboardingComplete'
+const TUTORIAL_KEY = 'pivot-point.tutorialComplete'
 
 function withCharacter(character: PlayerCharacter | null): GameState {
   const base = createInitialGameState()
@@ -88,6 +89,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
       return false
     }
   })
+  const [tutorialComplete, setTutorialComplete] = useState(() => {
+    try {
+      return localStorage.getItem(TUTORIAL_KEY) === '1'
+    } catch {
+      return false
+    }
+  })
+  const [tutorialReplayActive, setTutorialReplayActive] = useState(false)
+  const [tutorialRunId, setTutorialRunId] = useState(0)
 
   const registryRef = useRef(buildMissionRegistry())
 
@@ -347,6 +357,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setOnboardingComplete(true)
   }, [])
 
+  const completeTutorial = useCallback(() => {
+    localStorage.setItem(TUTORIAL_KEY, '1')
+    setTutorialComplete(true)
+    setTutorialReplayActive(false)
+  }, [])
+
+  const replayTutorial = useCallback(() => {
+    setTutorialReplayActive(true)
+    setTutorialRunId((n) => n + 1)
+  }, [])
+
   const value = useMemo(
     () => ({
       ready,
@@ -355,6 +376,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       activeSaveId,
       customMissions,
       onboardingComplete,
+      tutorialComplete,
+      tutorialReplayActive,
+      tutorialRunId,
       dispatch,
       setCharacter,
       setPlayStyle,
@@ -373,6 +397,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       saveToSlot,
       deleteSaveSlot,
       completeOnboarding,
+      completeTutorial,
+      replayTutorial,
     }),
     [
       ready,
@@ -381,6 +407,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
       activeSaveId,
       customMissions,
       onboardingComplete,
+      tutorialComplete,
+      tutorialReplayActive,
+      tutorialRunId,
       dispatch,
       setCharacter,
       setPlayStyle,
@@ -399,6 +428,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       saveToSlot,
       deleteSaveSlot,
       completeOnboarding,
+      completeTutorial,
+      replayTutorial,
     ],
   )
 

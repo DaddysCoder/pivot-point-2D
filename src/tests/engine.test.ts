@@ -465,6 +465,17 @@ describe('mission engine rules', () => {
     )
     expect(getMissionById(fixtureRegistry, 'missing')).toBeUndefined()
   })
+
+  it('complete_mission is rejected when not at the objective node', () => {
+    const mission = createFixtureMission()
+    const state = startMission(createInitialGameState(), mission).state
+    const denied = applyEffects(state, mission, [{ type: 'complete_mission' }])
+    expect(denied.state.missionStatus).toBe('active')
+    expect(denied.events.some((e) => e.type === 'COMPLETION_REJECTED')).toBe(true)
+    expect(
+      denied.state.missionLog.some((e) => e.title === 'OBJECTIVE NOT YET MET'),
+    ).toBe(true)
+  })
 })
 
 describe('types helpers', () => {

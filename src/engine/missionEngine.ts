@@ -304,32 +304,6 @@ export function applyPlayerAction(
     }
   }
 
-  if (action.type === 'ADVANCE_TURN') {
-    const runtimeMission = composeMission(mission, state)
-    let next: GameState = { ...state, turn: state.turn + 1 }
-    const delivered = deliverPendingIntel(next, runtimeMission)
-    next = delivered.state
-    const events = [...delivered.events]
-
-    for (const event of runtimeMission.events) {
-      if (
-        event.trigger.type === 'on_turn' &&
-        event.trigger.turn === next.turn &&
-        !(event.once && next.triggeredEventIds.includes(event.id))
-      ) {
-        const activated = activatePivotEvent(next, runtimeMission, event.id)
-        next = noteMissionDirectorPivot(activated.state, event.id)
-        events.push(...activated.events)
-      }
-    }
-
-    const directed = maybeDirector(next, mission, options)
-    next = directed.state
-    events.push(...directed.events)
-
-    return { state: next, events }
-  }
-
   if (action.type === 'SELECT_CHOICE') {
     const runtimeMission = composeMission(mission, state)
     const choice = findChoice(runtimeMission, action.choiceId)

@@ -122,7 +122,7 @@ describe('Supply Line mission', () => {
     expect(state.pivotCount).toBe(pivots)
     expect(
       state.missionLog.some((e) =>
-        e.body.includes('Insufficient materials'),
+        e.body.includes('missing materials'),
       ),
     ).toBe(true)
   })
