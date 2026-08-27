@@ -48,6 +48,8 @@ export interface EmblemConfig {
   colour: string
 }
 
+export type PortraitStyle = 'sketch' | 'illustrated'
+
 export interface PlayerCharacter {
   id: string
   callSign: string
@@ -56,6 +58,8 @@ export interface PlayerCharacter {
   emblem: EmblemConfig
   pronouns?: string
   displayName?: string
+  /** 'sketch' (default) uses the customizable SVG portrait; 'illustrated' uses commissioned art when available for the role. */
+  portraitStyle?: PortraitStyle
 }
 
 export interface GridPosition {
@@ -355,6 +359,7 @@ export function createDefaultCharacter(
     id: 'operator-1',
     callSign: 'ECHO',
     role: 'strategist',
+    portraitStyle: 'sketch',
     appearance: {
       bodyStyle: 'standard',
       face: 'calm',

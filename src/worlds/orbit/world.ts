@@ -1,5 +1,6 @@
 import type { BuildingDefinition, WorldPack } from '@/engine/types'
 import { relayDriftMission } from '@/worlds/orbit/missions/relayDrift'
+import { solarFlareMission } from '@/worlds/orbit/missions/solarFlare'
 import { orbitTerrain } from '@/worlds/orbit/terrain'
 
 export const orbitBuildings: BuildingDefinition[] = [
@@ -52,7 +53,7 @@ export const orbitWorld: WorldPack = {
   name: 'WORLD 02 — ORBIT',
   terrain: orbitTerrain,
   buildings: orbitBuildings,
-  missions: [relayDriftMission],
+  missions: [relayDriftMission, solarFlareMission],
   theme: {
     id: 'orbit-blueprint',
     displayName: 'Orbit Blueprint Table',

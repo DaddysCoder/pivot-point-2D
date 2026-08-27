@@ -1,5 +1,6 @@
 import type { BuildingDefinition, WorldPack } from '@/engine/types'
 import { signalBlockMission } from '@/worlds/rail/missions/signalBlock'
+import { washoutMission } from '@/worlds/rail/missions/washout'
 import { railTerrain } from '@/worlds/rail/terrain'
 
 export const railBuildings: BuildingDefinition[] = [
@@ -52,7 +53,7 @@ export const railWorld: WorldPack = {
   name: 'WORLD 03 — RAIL',
   terrain: railTerrain,
   buildings: railBuildings,
-  missions: [signalBlockMission],
+  missions: [signalBlockMission, washoutMission],
   theme: {
     id: 'rail-diagram',
     displayName: 'Railway Diagram Table',
