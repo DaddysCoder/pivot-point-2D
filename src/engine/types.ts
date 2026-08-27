@@ -326,7 +326,6 @@ export interface GameState {
 export type PlayerAction =
   | { type: 'START_MISSION'; missionId: string }
   | { type: 'SELECT_CHOICE'; choiceId: string }
-  | { type: 'ADVANCE_TURN' }
   | { type: 'TRIGGER_FACILITATOR_EVENT'; eventId: string }
   | { type: 'PAUSE' }
   | { type: 'RESUME' }

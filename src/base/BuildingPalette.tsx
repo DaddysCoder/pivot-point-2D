@@ -57,6 +57,9 @@ export function BuildingPalette({
               <p className="mb-2 text-sm text-[var(--pp-route)]">
                 {def?.description ?? upgrade.label} · Lv {level}/{upgrade.maxLevel} ·
                 Cost {upgrade.cost}
+                {upgrade.mechanical
+                  ? ' · Unlocks Workshop crafting'
+                  : ' · No mechanical benefit yet'}
               </p>
               <Button
                 variant="secondary"

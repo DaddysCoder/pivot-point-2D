@@ -19,12 +19,14 @@ function SelectField<T extends string | number>({
   value,
   options,
   onChange,
+  disabled = false,
 }: {
   id: string
   label: string
   value: T
   options: Array<{ value: T; label: string }>
   onChange: (value: T) => void
+  disabled?: boolean
 }) {
   return (
     <div>
@@ -34,6 +36,7 @@ function SelectField<T extends string | number>({
       <select
         id={id}
         value={String(value)}
+        disabled={disabled}
         onChange={(e) => {
           const raw = e.target.value
           const matched = options.find((o) => String(o.value) === raw)
@@ -92,8 +95,9 @@ export function PlayStyleSettingsPanel() {
         />
         <SelectField<TimePressure>
           id="time-pressure"
-          label="Time pressure"
+          label="Time pressure (unavailable — not wired)"
           value={playStyle.timePressure}
+          disabled
           onChange={(timePressure) => update({ timePressure })}
           options={[
             { value: 'none', label: 'None (default)' },
@@ -124,8 +128,9 @@ export function PlayStyleSettingsPanel() {
         />
         <SelectField<TransitionWarning>
           id="transitions"
-          label="Mission transitions"
+          label="Mission transitions (unavailable — not wired)"
           value={playStyle.transitionWarning}
+          disabled
           onChange={(transitionWarning) => update({ transitionWarning })}
           options={[
             { value: 'immediate', label: 'Immediate' },

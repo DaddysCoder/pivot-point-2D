@@ -9,10 +9,46 @@ export const BUILDING_LABELS: Record<string, string> = {
 }
 
 export const UPGRADE_DEFS = [
-  { id: 'map-room', label: 'Upgrade Map Room', cost: 3, maxLevel: 2 },
-  { id: 'workshop', label: 'Build Workshop', cost: 5, maxLevel: 1 },
-  { id: 'storage', label: 'Expand Storage', cost: 2, maxLevel: 2 },
-  { id: 'recon', label: 'Upgrade Recon Post', cost: 4, maxLevel: 2 },
-  { id: 'archive', label: 'Build Archive', cost: 4, maxLevel: 1 },
-  { id: 'comms-tower', label: 'Build Comms Tower', cost: 6, maxLevel: 1 },
+  {
+    id: 'map-room',
+    label: 'Upgrade Map Room',
+    cost: 3,
+    maxLevel: 2,
+    mechanical: false,
+  },
+  {
+    id: 'workshop',
+    label: 'Build Workshop',
+    cost: 5,
+    maxLevel: 1,
+    mechanical: true,
+  },
+  {
+    id: 'storage',
+    label: 'Expand Storage',
+    cost: 2,
+    maxLevel: 2,
+    mechanical: false,
+  },
+  {
+    id: 'recon',
+    label: 'Upgrade Recon Post',
+    cost: 4,
+    maxLevel: 2,
+    mechanical: false,
+  },
+  {
+    id: 'archive',
+    label: 'Build Archive',
+    cost: 4,
+    maxLevel: 1,
+    mechanical: false,
+  },
+  {
+    id: 'comms-tower',
+    label: 'Build Comms Tower',
+    cost: 6,
+    maxLevel: 1,
+    mechanical: false,
+  },
 ] as const

@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useGame } from '@/app/useGame'
+import { HowToPlayScreen } from '@/app/HowToPlayScreen'
 import { OnboardingScreen } from '@/app/OnboardingScreen'
 import { BaseScreen } from '@/base/BaseScreen'
 import { CharacterCreator } from '@/character/CharacterCreator'
@@ -35,6 +36,7 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomeRedirect />} />
       <Route path="/onboarding" element={<OnboardingScreen />} />
+      <Route path="/how-to-play" element={<HowToPlayScreen />} />
       <Route path="/create" element={<CharacterCreator />} />
       <Route path="/base" element={<BaseScreen />} />
       <Route path="/workshop" element={<WorkshopScreen />} />

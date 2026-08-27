@@ -26,6 +26,7 @@ Playable across three world packs, custom missions, PWA install, and facilitator
 - PWA (installable, offline shell)
 - Light Web Audio feedback
 - Onboarding + skip-to-content
+- How to Play (permanent) + Mission Brief instructions + first-mission tutorial
 
 ### Explicitly not included (by design)
 - Backend / authentication / analytics
