@@ -195,6 +195,7 @@ export function MissionScreen() {
           informationStyle={playStyle.informationStyle}
           predictability={playStyle.predictability}
           resources={game.resources}
+          worldId={game.worldId}
         />
       ) : null}
 

@@ -10,7 +10,8 @@ import {
   ROLE_OPTIONS,
 } from '@/character/characterTypes'
 import { EmblemMark } from '@/character/EmblemMark'
-import { OperatorPortrait } from '@/character/OperatorPortrait'
+import { illustratedPortraitFor } from '@/character/illustratedPortraits'
+import { PortraitFrame } from '@/character/PortraitFrame'
 import { RoleMark } from '@/character/RoleMark'
 import { VisualOption, VisualOptionGroup } from '@/character/VisualOption'
 import {
@@ -23,6 +24,7 @@ import type {
   CharacterRole,
   EmblemConfig,
   PlayerCharacter,
+  PortraitStyle,
 } from '@/engine/types'
 
 function FieldLabel({
@@ -86,6 +88,10 @@ export function CharacterCreator() {
     () => ROLE_OPTIONS.find((r) => r.id === draft.role),
     [draft.role],
   )
+
+  const illustratedArt = illustratedPortraitFor(draft.role)
+  const effectivePortraitStyle: PortraitStyle =
+    draft.portraitStyle === 'illustrated' && illustratedArt ? 'illustrated' : 'sketch'
 
   const update = (patch: Partial<PlayerCharacter>) => {
     setDraft((current) => ({ ...current, ...patch }))
@@ -179,6 +185,39 @@ export function CharacterCreator() {
                 Selected: {roleMeta.label} — {roleMeta.bonus}
               </p>
             ) : null}
+          </VisualOptionGroup>
+
+          <VisualOptionGroup legend="Portrait style">
+            <div className="grid gap-2 sm:grid-cols-2">
+              <VisualOption
+                selected={effectivePortraitStyle === 'sketch'}
+                label="Use the customizable SVG portrait"
+                onSelect={() => update({ portraitStyle: 'sketch' })}
+                className="flex flex-col gap-1 p-3"
+              >
+                <span className="pp-display text-lg text-[var(--pp-ink)]">SVG (customizable)</span>
+                <span className="text-sm text-[var(--pp-ink)]">
+                  Updates live as you change appearance below.
+                </span>
+              </VisualOption>
+              <VisualOption
+                selected={effectivePortraitStyle === 'illustrated'}
+                label={
+                  illustratedArt
+                    ? 'Use the illustrated portrait for this role'
+                    : 'Illustrated portrait not yet available for this role'
+                }
+                onSelect={() => illustratedArt && update({ portraitStyle: 'illustrated' })}
+                className={`flex flex-col gap-1 p-3 ${illustratedArt ? '' : 'cursor-not-allowed opacity-50'}`}
+              >
+                <span className="pp-display text-lg text-[var(--pp-ink)]">Illustrated</span>
+                <span className="text-sm text-[var(--pp-ink)]">
+                  {illustratedArt
+                    ? 'Commissioned art for this role.'
+                    : 'Not available for this role yet — appearance options below won’t apply.'}
+                </span>
+              </VisualOption>
+            </div>
           </VisualOptionGroup>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -375,6 +414,7 @@ export function CharacterCreator() {
                 const character = {
                   ...draft,
                   callSign: draft.callSign.trim().toUpperCase(),
+                  portraitStyle: effectivePortraitStyle,
                 }
                 saveCharacterToStorage(character)
                 setCharacter(character)
@@ -390,11 +430,12 @@ export function CharacterCreator() {
           <p className="self-start text-[10px] uppercase tracking-[0.2em] text-[var(--pp-copper)]">
             Field preview
           </p>
-          <OperatorPortrait
+          <PortraitFrame
             appearance={draft.appearance}
             emblem={draft.emblem}
             callSign={draft.callSign || '——'}
             role={draft.role}
+            portraitStyle={effectivePortraitStyle}
             size={240}
           />
         </aside>

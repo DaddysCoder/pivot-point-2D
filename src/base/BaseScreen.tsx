@@ -6,7 +6,7 @@ import { BaseGrid } from '@/base/BaseGrid'
 import { BUILDING_LABELS, UPGRADE_DEFS } from '@/base/buildingMeta'
 import { BuildingPalette } from '@/base/BuildingPalette'
 import { EmblemMark } from '@/character/EmblemMark'
-import { OperatorPortrait } from '@/character/OperatorPortrait'
+import { PortraitFrame } from '@/character/PortraitFrame'
 import { Button } from '@/components/Button'
 import { StatusStamp } from '@/components/StatusStamp'
 import { getWorldPack, listPackMissions, WORLD_PACKS } from '@/worlds/registry'
@@ -46,9 +46,11 @@ export function BaseScreen() {
   return (
     <div className="mx-auto max-w-6xl space-y-5 p-4 md:p-6">
       <header className="pp-fade-up grid gap-4 border-b border-[var(--pp-brass)]/25 pb-5 md:grid-cols-[auto_1fr_auto] md:items-end">
-        <OperatorPortrait
+        <PortraitFrame
           appearance={game.character.appearance}
           emblem={game.character.emblem}
+          role={game.character.role}
+          portraitStyle={game.character.portraitStyle}
           size={120}
           showEmblem={false}
           className="justify-self-start"

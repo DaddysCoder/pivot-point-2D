@@ -7,6 +7,7 @@ import type {
 import { Modal } from '@/components/Modal'
 import { DecisionPanel } from '@/mission/DecisionPanel'
 import type { DecisionLoad, InformationStyle } from '@/settings/playStyleTypes'
+import { frontierPivotArtFor } from '@/worlds/frontier/pivotArt'
 
 interface PivotEventProps {
   event: PivotEventDefinition
@@ -17,6 +18,7 @@ interface PivotEventProps {
   informationStyle: InformationStyle
   predictability: 'high' | 'balanced' | 'unpredictable'
   resources?: ResourceState
+  worldId?: string
 }
 
 const CONDITION_COPY: Record<MissionLogTone, string> = {
@@ -52,8 +54,10 @@ export function PivotEventOverlay({
   informationStyle,
   predictability,
   resources,
+  worldId,
 }: PivotEventProps) {
   const tags = conditionTags(event)
+  const backdrop = worldId === 'frontier' ? frontierPivotArtFor(event.statusLabel) : undefined
 
   return (
     <Modal open={open} title={event.title} className="pp-pivot-modal">
@@ -64,6 +68,14 @@ export function PivotEventOverlay({
         >
           Pivot Point
         </div>
+        {backdrop ? (
+          <img
+            src={backdrop}
+            alt=""
+            aria-hidden
+            className="mb-3 h-32 w-full border border-[var(--pp-route)]/30 object-cover md:h-40"
+          />
+        ) : null}
         <p className="mb-2 text-[10px] uppercase tracking-[0.22em] text-[var(--pp-alert)]">
           Pivot Point · Conditions changed
         </p>
